@@ -1,15 +1,5 @@
-#import os
-import node, uniformcost, Amisplaced, AstarF, math
+import node, AstarF, math
 from problem import *
-
-#def include(filename):
-#    if os.path.exists(filename): 
-#        execfile(filename)
-
-#include('node.py')
-#include('uniformcost.py')
-#include('priorityqueue.py')
-#include('problem.py')
 
 def estcostmisplaced(nodeLayout, probLayout): #probLayout is a list
     cnt = 0
@@ -31,8 +21,6 @@ def estcosteuclidean(nodeLayout, probLayout): #probLayout is a list
         for c in range(3):
             mapofPuzzle.update({probLayout[r][c] : (r,c)})
     
-    print("mapofpuzzle =", mapofPuzzle)
-
     for r in range(3):
         for c in range(3):
             if nodeLayout[r][c] == 0:
@@ -41,7 +29,6 @@ def estcosteuclidean(nodeLayout, probLayout): #probLayout is a list
             diffr = pr - r
             diffc = pc - c
             result += math.sqrt(diffr**2 + diffc**2)
-    #result = floor(r)
 
     return math.floor(result) #diff should be less than 8
 

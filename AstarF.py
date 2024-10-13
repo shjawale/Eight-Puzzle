@@ -24,19 +24,12 @@ def Astar(problem, estcost):  #returns either a solution or failure
     
     #initialize the frontier using the initial state of problem
     root = node.Node(None, 0, problem.initial_state)
-    #print("root =", root.currPuzzleLayout)
     frontier.push(root) #, root.gn, root.hn)
-    #print("frontier after pushing root =", frontier.queue[0].currPuzzleLayout)
    
-    #uctree = tree.Tree()
-    #uctree.source = root
-
     #initialize the explored set to be empty
     explored = set()
-    #print("explored =", explored)
 
     while True:
-        #print("in while loop")
         if frontier.isEmpty():
             return "failure" #what will failure look like??
         
@@ -48,18 +41,12 @@ def Astar(problem, estcost):  #returns either a solution or failure
         print("popped min from frontier", nodewithmingn.currPuzzleLayout, "with a g(n) =", nodewithmingn.gn, "and a h(n) =", nodewithmingn.hn, "and a queue size of", len(frontier.queue))
     
         if nodewithmingn.isGoalState(problem):
-            #return nodewithmingn.findPath()
             return "found solution" #corresponding solution
 
         #expand chosen node, creating new nodes.
         #   if any new nodes are in explored set, do nothing:
         #   check if each is in the frontier. if it is, update or add to frontier.
         allnewnodes = []
-        #print("before possibleOperators call: nodewithmingn.currPuzzleLayout =", nodewithmingn.currPuzzleLayout)
-        #possoperators = nodewithmingn.possibleOperators(problem) #returns list of all possible operators starting from chosen node
-
-        #print("before loop: allnewnodes =", allnewnodes)
-        
         newNode = nodewithmingn.goUp() #newNode is a node containing the new puzzle layout
         if newNode is not None:
             newNode.hn = estcost(newNode.currPuzzleLayout, problem.goal_state.currPuzzleLayout)
@@ -80,8 +67,8 @@ def Astar(problem, estcost):  #returns either a solution or failure
             newNode.hn = estcost(newNode.currPuzzleLayout, problem.goal_state.currPuzzleLayout)
             allnewnodes.append(newNode) #list of all new nodes adjacent to chosen node
         
-        for i in range(len(allnewnodes)):
-            print("after loop: allnewnodes[",i, "] =", allnewnodes[i].currPuzzleLayout)
+        #for i in range(len(allnewnodes)):
+            #print("after loop: allnewnodes[",i, "] =", allnewnodes[i].currPuzzleLayout)
 
         for n in allnewnodes: #iterate over nodes
             print("n.currPuzzleLayout =", n.currPuzzleLayout)
@@ -94,7 +81,8 @@ def Astar(problem, estcost):  #returns either a solution or failure
             else:
                 frontier.push(n)
                 print("pushed", n.currPuzzleLayout, "to frontier")
-                #print("frontier.queue[0] =", frontier.queue)
 
-        #print("explored =", explored) 
+        #print("explored =", len(explored), "  ", nodewithmingn.currPuzzleLayout) 
         explored.add(nodewithmingn) #add the node to the explored set
+        if len(explored) >= 25000:
+            return "but could not find solution in 25000 nodes"
