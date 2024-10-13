@@ -1,22 +1,4 @@
-#function GraphSearch(problem) returns a solution, or failure
-#   initialize the frontier using the initial state of problem
-#   initialize the explored set to be empty
-#   LOOP DO:
-#       IF the frontier is empty:
-#           return failure
-#       choose a leaf node and remove it from the frontier
-#       IF the node contains a goal state:
-#           return corresponding solution
-#       IF choosen node is in the frontier, update node. IF chosen node is in explored set, do nothing:
-#           expand the chosen node, adding the resulting node to the frontier
-#       add the node to the explored set
-
-# uniform cost search
-# dequeue nodes in order of their cost (from initial node), g(n)
-#   which is the same as A* = g(n) + h(n) where h(n) = 0
-
 import priorityqueue, node
-
 
 def Astar(problem, estcost):  #returns either a solution or failure
     frontier = priorityqueue.priorityQueue()  #needs to be a priority queue (min heap)
@@ -67,9 +49,6 @@ def Astar(problem, estcost):  #returns either a solution or failure
             newNode.hn = estcost(newNode.currPuzzleLayout, problem.goal_state.currPuzzleLayout)
             allnewnodes.append(newNode) #list of all new nodes adjacent to chosen node
         
-        #for i in range(len(allnewnodes)):
-            #print("after loop: allnewnodes[",i, "] =", allnewnodes[i].currPuzzleLayout)
-
         for n in allnewnodes: #iterate over nodes
             print("n.currPuzzleLayout =", n.currPuzzleLayout)
             if n in explored: #returns bool corresponding to whether given node is in explored set
@@ -82,7 +61,6 @@ def Astar(problem, estcost):  #returns either a solution or failure
                 frontier.push(n)
                 print("pushed", n.currPuzzleLayout, "to frontier")
 
-        #print("explored =", len(explored), "  ", nodewithmingn.currPuzzleLayout) 
         explored.add(nodewithmingn) #add the node to the explored set
         if len(explored) >= 25000:
             return "but could not find solution in 25000 nodes"
